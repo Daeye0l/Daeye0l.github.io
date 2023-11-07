@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/style.css">
+<title>블로그 제작기</title>
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>블로그 제작기 | Texture Theme</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="블로그 제작기" />
+<meta name="author" content="Daeyeol Sung" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="깃허브 블로그를 처음 만들면서 진행했던 과정" />
+<meta property="og:description" content="깃허브 블로그를 처음 만들면서 진행했던 과정" />
+<link rel="canonical" href="http://localhost:4000/posts/make-blog/" />
+<meta property="og:url" content="http://localhost:4000/posts/make-blog/" />
+<meta property="og:site_name" content="Texture Theme" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-11-05T00:00:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="블로그 제작기" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Daeyeol Sung"},"dateModified":"2023-11-05T00:00:00+09:00","datePublished":"2023-11-05T00:00:00+09:00","description":"깃허브 블로그를 처음 만들면서 진행했던 과정","headline":"블로그 제작기","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/posts/make-blog/"},"url":"http://localhost:4000/posts/make-blog/"}</script>
+<!-- End Jekyll SEO tag -->
+</head>
+<body>
+  <header class="texture-blue">
+    <div class="container"></div><div class="container">
+	<h1>블로그 제작기</h1>
+	<h4 class="post-description">깃허브 블로그를 처음 만들면서 진행했던 과정</h4>
+	<div class="post-date" style="margin-top:20px">
+		Published on Nov 5, 2023
+	</div>
+	<ul class="post-tags"></ul>
+</div>
+</header>
+  <main>
+    <div class="container">
+      <div class="post-container">
+          <p>깃허브 블로그를 만들기 위해 Ruby를 설치하여 jekyll을 설치한 뒤 적용시킬 블로그 테마를 다운로드 하여 커스터마이징 하는 과정을 포스팅했다.
+<br /><br /></p>
+
+<h2 id="1jekyll-설치-및-초기-설정">1.Jekyll 설치 및 초기 설정</h2>
+<hr />
+
+<ul>
+  <li>
+    <p><a href="https://rubyinstaller.org/">RubyInstaller</a>를 사용하여 x86 버전 윈도우용 Ruby를 설치한다.</p>
+  </li>
+  <li>Windows 시작 &gt; Start Command Prompt with Ruby 실행한다.
+    <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="n">install</span> <span class="n">jekyll</span> <span class="n">bundler</span>
+</code></pre></div>    </div>
+  </li>
+  <li>새로운 jekyll 사이트를 생성한다.
+    <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">jekyll</span> <span class="n">new</span> <span class="p">[</span><span class="n">user_name</span><span class="p">].</span><span class="nf">github</span><span class="p">.</span><span class="nf">io</span>
+</code></pre></div>    </div>
+  </li>
+  <li>생성한 jekyll 디렉토리로 이동하여 init후 remote repository에 push
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git init
+git remote add origin https://github.com/[user_name]/[user_name].github.io.git
+git push <span class="nt">-u</span> origin main
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="2-github-블로그에-테마-적용하기">2. github 블로그에 테마 적용하기</h2>
+
+<p>테마를 직접 다운로드 하여 적용한다.</p>
+<hr />
+
+<ul>
+  <li>
+    <p><a href="https://jekyll.thema.org/">Jekyll Themes</a>에 들어가면 다양한 블로그 테마가 있다.</p>
+  </li>
+  <li>
+    <p>마음에 드는 테마를 골랐다면 다운로드 한다.</p>
+  </li>
+  <li>만들었던 [user_name].github.io 디렉토리로 이동한다.
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> <span class="o">[</span>user_name].github.io
+</code></pre></div>    </div>
+  </li>
+  <li>디렉토리의 내용을 다운 받은 테마의 내용으로 덮어쓴다.
+<br /><br /></li>
+</ul>
+
+<h2 id="3-테마를-나에게-맞게-커스터마이징-하기">3. 테마를 나에게 맞게 커스터마이징 하기</h2>
+
+<p>다운 받은 테마의 기본 내용을 수정하여 나의 블로그로 커스터마이징 한다.</p>
+<hr />
+
+<ul>
+  <li>
+    <p>내가 적용한 테마는 <a href="https://jekyll.thema.org/">Jekyll Themes</a>에 있는 <strong>texture</strong> 테마이다.</p>
+  </li>
+  <li>_config.yml에 있는 texture의 title, tagline, style, showPicker 기본값을 수정했다.
+    <div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">texture</span><span class="pi">:</span>
+<span class="na">title</span><span class="pi">:</span> <span class="s">DaeYeol Sung</span>
+<span class="na">tagline</span><span class="pi">:</span> <span class="s">Backend Developer</span>
+<span class="na">date_format</span><span class="pi">:</span> <span class="s2">"</span><span class="s">%b</span><span class="nv"> </span><span class="s">%-d,</span><span class="nv"> </span><span class="s">%Y"</span>
+<span class="na">style</span><span class="pi">:</span> <span class="s">blue</span>
+<span class="na">showNav</span><span class="pi">:</span> <span class="kc">false</span>
+<span class="na">showPicker</span><span class="pi">:</span> <span class="kc">false</span>
+</code></pre></div>    </div>
+  </li>
+  <li>showPicker는 테마의 색상을 변경하는 창을 띄워주는 역할을 하는데 필요하다면 사용할 수도 있다.
+    <div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">showPicker</span><span class="pi">:</span> <span class="kc">true</span>
+</code></pre></div>    </div>
+  </li>
+  <li>page_header.html의 tagline밑에 학교명이 나오도록 태그를 하나 추가했다.</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;h3&gt;</span>Sungkonghoe University<span class="nt">&lt;/h3&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>twitter와 linkedin계정이 없기 때문에 page_header.html의 아래 내용을 주석처리하여 제거했다.</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://linkedin.com/in/thelehhman"</span><span class="nt">&gt;&lt;li&gt;&lt;i</span> <span class="na">class=</span><span class="s">"icon-linkedin-squared"</span><span class="nt">&gt;&lt;/i&gt;&lt;/li&gt;&lt;/a&gt;</span>
+
+<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://twitter.com/thelehhman"</span><span class="nt">&gt;&lt;li&gt;&lt;i</span> <span class="na">class=</span><span class="s">"icon-twitter-squared"</span><span class="nt">&gt;&lt;/i&gt;&lt;/li&gt;&lt;/a&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>github아이콘을 클릭했을 때 내 깃허브 주소로 이동하도록 _config.yml에 있는 social_link를 수정했다.(twitter, linkedin은 위의 과정에서 주석처리 했기 때문에 따로 손대지 않음.)
+    <div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="na">social_links</span><span class="pi">:</span>
+  <span class="na">twitter</span><span class="pi">:</span> <span class="s">thelehhman</span>
+  <span class="na">github</span><span class="pi">:</span>  <span class="s">Daeye0l</span>
+  <span class="na">linkedIn</span><span class="pi">:</span> <span class="s">in/thelehhman</span>
+  <span class="na">rss</span><span class="pi">:</span> <span class="s">rss</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="4-추가로-하고싶은-작업">4. 추가로 하고싶은 작업</h2>
+<hr />
+
+<ul>
+  <li>
+    <p>post_header.html을 분석하여 포스팅 헤더에 태그 부여하기</p>
+  </li>
+  <li>
+    <p>github뿐만 아니라 추가할 수 있는 social_link 더 추가하기</p>
+  </li>
+</ul>
+
+      </div>
+      <br><br>
+      <!--Configure Disqus-->
+      <script src="https://utteranc.es/client.js"
+        repo="Daeye0l/Daeye0l.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+      </script>
+    </div>
+  </main></body>
+</html>
