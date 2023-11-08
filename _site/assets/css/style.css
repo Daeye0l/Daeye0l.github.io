@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @font-face {
   font-family: "fontello";
   src: url("../font/fontello.eot?26793073");
@@ -891,3 +892,5 @@ header .social li i:hover {
 .texture-purple .post-date {
   color: #ddd;
 }
+
+/*# sourceMappingURL=style.css.map */
