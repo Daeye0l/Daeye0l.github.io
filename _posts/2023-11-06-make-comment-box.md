@@ -21,7 +21,6 @@ description: utterances를 사용해 포스트에 댓글창 만들기
 
 - Theme목록중에서 원하는 테마를 선택한다.
 ![theme](../../images/theme.png)
-    - owner 부분을 비우면 댓글창이 생기지 않으니 주의하도록 한다.
 <br>
 
 ## 3. 코드에 적용하기
