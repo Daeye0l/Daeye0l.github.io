@@ -30,24 +30,7 @@ description: utterances를 사용해 포스트에 댓글창 만들기
 ![script](../../images/script.png)
 
 - post.html에 다음과 같이 disqus설정 코드가 있다면 제거 또는 주석처리 하고 그 자리에 script 코드를 적용한다.
-```
-{%- if site.texture.disqus_shortname -%}
-    <div id="disqus_thread" style="margin-top:25px"></div>
-    <script>
-        var disqus_config = function () {
-        this.page.url = '{{ page.url | absolute_url }}';
-        this.page.identifier = '{{ page.url | absolute_url }}';
-        };
-        (function() {
-        var d = document, s = d.createElement('script');
-        s.src = 'https://{{ site.texture.disqus_shortname }}.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-{%- endif -%}-->
-```
+![disqus](../../images/disqus.png)
 
 - 블로그에 댓글창이 생긴것을 확인할 수 있다.
 ![box](../../images/box.png)
