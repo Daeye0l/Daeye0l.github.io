@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Google Analytics 적용하기"
-description: Google Analytics를 사용해 블로그 사용자에 대한 통계자료 보기
+description: Google Analytics를 사용해 블로그 사용자에 대한 통계 정보 보기
 ---
 블로그 뿐만 아니라 어떤 웹페이지에 방문하는 사람들에 대한 통계 자료가 필요한 경우가 있을 수 있다. Google Analytics를 사용해 블로그를 방문한 사람들에 대한 통계 자료를 확인할 수 있도록 하는 방법을 포스팅했다.
 <br><br>
