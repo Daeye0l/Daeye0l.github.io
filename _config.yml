@@ -24,7 +24,7 @@ texture:
   analytics_id: 'G-5YYHRE7CRY'
   navigation:
     - title: Home
-      url: "/"
+      url: "https://daeye0l.github.io"
     - title: Organization
       url: "https://skhu.ac.kr"
 
