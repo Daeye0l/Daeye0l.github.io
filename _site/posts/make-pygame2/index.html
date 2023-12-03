@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/style.css">
+<title>Pygame으로 게임 제작하기(2)</title>
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Pygame으로 게임 제작하기(2) | Texture Theme</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Pygame으로 게임 제작하기(2)" />
+<meta name="author" content="Daeyeol Sung" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="pygame을 사용하여 달리기 게임 제작하기" />
+<meta property="og:description" content="pygame을 사용하여 달리기 게임 제작하기" />
+<link rel="canonical" href="http://localhost:4000/posts/make-pygame2/" />
+<meta property="og:url" content="http://localhost:4000/posts/make-pygame2/" />
+<meta property="og:site_name" content="Texture Theme" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-12-03T00:00:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Pygame으로 게임 제작하기(2)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Daeyeol Sung"},"dateModified":"2023-12-03T00:00:00+09:00","datePublished":"2023-12-03T00:00:00+09:00","description":"pygame을 사용하여 달리기 게임 제작하기","headline":"Pygame으로 게임 제작하기(2)","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/posts/make-pygame2/"},"url":"http://localhost:4000/posts/make-pygame2/"}</script>
+<!-- End Jekyll SEO tag -->
+</head>
+<body>
+  <header class="texture-blue">
+    <div class="container"></div><div class="container">
+	<h1>Pygame으로 게임 제작하기(2)</h1>
+	<h4 class="post-description">pygame을 사용하여 달리기 게임 제작하기</h4>
+	<div class="post-date" style="margin-top:20px">
+		Published on Dec 3, 2023
+	</div>
+	<ul class="post-tags"></ul>
+</div>
+</header>
+  <main>
+    <div class="container">
+      <div class="post-container">
+          <p>두 번째 제작기에서는 코드의 가독성을 높이기 위해 진행했던 구조 개선과 함께 추가로 더한 기능들, 그리고 느낀점에 대해 포스팅 했다.
+<br /><br /></p>
+
+<h2 id="1-한계에-대한-고민">1. 한계에 대한 고민</h2>
+<hr />
+
+<p>기본적인 틀은 잡았지만 앞으로의 추가적인 구현을 위해 구조 개선을 하기로 했다. 구조 개선을 하기로 한 이유는 아래와 같다.</p>
+
+<ul>
+  <li>
+    <p>이미지의 로드, 점프 기능, 여러가지 이벤트가 모두 main 함수 내부에서 진행되기 때문에 코드가 지저분해짐.</p>
+  </li>
+  <li>
+    <p>바다사자, 갈매기 뿐만 아니라 새로운 객체들이 추가되면 그에 관련된 코드들이 추가되면서 코드의 가독성이 더 떨어질 것임.</p>
+  </li>
+  <li>
+    <p>구조 개선을 통해 클래스를 구현해 놓으면 앞으로 몇 개의 객체를 새로 추가 하더라도 코드를 작성하는 데에 어려움이 없을 것임.</p>
+  </li>
+</ul>
+
+<h2 id="2-구조-개선하기">2. 구조 개선하기</h2>
+<hr />
+
+<p>우선 우리가 만들고 있는 게임의 모티브인 크롬 공룡 달리기 게임을 구현한 새로운 코드를 가지고 와서 원래 진행하고 있던 현황까지로 변경하기로 했다.<a href="https://github.com/maxontech/chrome-dinosaur">(출처코드)</a> <a href="https://www.youtube.com/watch?v=wtEhZNdgNuA">해당 코드에 대한 강의</a>가 유튜브에 있었기 때문에 전체적인 코드 진행을 알기 위해 강의를 보고난 후 진행했다. 우선 <strong>스크린에 관련된 설정과 게임에 필요한 이미지를 모두 전역변수로 초기화</strong> 했다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SCREEN</span> <span class="o">=</span> <span class="n">pygame</span><span class="p">.</span><span class="n">display</span><span class="p">.</span><span class="nf">set_mode</span><span class="p">((</span><span class="n">SCREEN_WIDTH</span><span class="p">,</span> <span class="n">SCREEN_HEIGHT</span><span class="p">))</span>
+
+<span class="n">RUNNING</span> <span class="o">=</span> <span class="p">[</span><span class="n">pygame</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="sh">"</span><span class="s">./img/peng_run_1.png</span><span class="sh">"</span><span class="p">),</span>
+           <span class="n">pygame</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="sh">"</span><span class="s">./img/peng_run_2.png</span><span class="sh">"</span><span class="p">)]</span>
+<span class="n">JUMPING</span> <span class="o">=</span> <span class="n">pygame</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="sh">"</span><span class="s">./img/peng_jump.png</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">DUCKING</span> <span class="o">=</span> <span class="n">pygame</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="sh">"</span><span class="s">./img/peng_duck.png</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="n">SEAL</span> <span class="o">=</span> <span class="n">pygame</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="sh">"</span><span class="s">./img/seal.png</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">SEAGULL</span> <span class="o">=</span> <span class="p">[</span><span class="n">pygame</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="sh">"</span><span class="s">./img/seagull_up.png</span><span class="sh">"</span><span class="p">),</span> 
+        <span class="n">pygame</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="sh">"</span><span class="s">./img/seagull_down.png</span><span class="sh">"</span><span class="p">)]</span>
+<span class="n">FISH</span> <span class="o">=</span> <span class="n">pygame</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="sh">"</span><span class="s">./img/fish.png</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="n">BG</span> <span class="o">=</span> <span class="n">pygame</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="sh">"</span><span class="s">./img/main_background.png</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>그 다음으로 게임에 필요한 객체들을 생성하기 위해 기존에 있던 클래스들 중 필요한 클래스만 살리고 나머지는 지웠다. 펭귄 클래스의 내용부터 살펴보면</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">X_POS</span> <span class="o">=</span> <span class="mi">80</span> <span class="c1"># x좌표 
+</span>    <span class="n">Y_POS</span> <span class="o">=</span> <span class="mi">350</span> <span class="c1"># y 좌표
+</span>    <span class="n">Y_POS_DUCK</span> <span class="o">=</span> <span class="mi">370</span> <span class="c1"># 펭귄이 숙이기 동작을 할 때의 y 좌표
+</span>    <span class="n">JUMP_VEL</span> <span class="o">=</span> <span class="mi">8</span> <span class="c1"># 점프 기능 구현에 사용할 변수
+</span>    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">duck_img</span> <span class="o">=</span> <span class="n">DUCKING</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">run_img</span> <span class="o">=</span> <span class="n">RUNNING</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">jump_img</span> <span class="o">=</span> <span class="n">JUMPING</span>
+
+        <span class="n">self</span><span class="p">.</span><span class="n">peng_duck</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">peng_run</span> <span class="o">=</span> <span class="bp">True</span> <span class="c1"># 게임 시작시 달리면서 시작하기 때문에 True
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">peng_jump</span> <span class="o">=</span> <span class="bp">False</span>
+
+        <span class="n">self</span><span class="p">.</span><span class="n">step_index</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># 다른 함수에서 이미지 변경을 위해 사용 할 변수
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">jump_vel</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">JUMP_VEL</span> <span class="c1"># 점프기능 구현을 위한 
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">run_img</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># 달리는 이미지 2개 중 첫 번째 이미지로 시작
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">peng_rect</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="nf">get_rect</span><span class="p">()</span> <span class="c1"># 충돌 범위를 구하기 위한 모양
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">peng_rect</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">X_POS</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">peng_rect</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">Y_POS</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">userInput</span><span class="p">):</span> <span class="c1"># 입력 이벤트가 들어올 시 실행
+</span>        <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="n">peng_duck</span><span class="p">:</span>
+            <span class="n">self</span><span class="p">.</span><span class="nf">duck</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="n">peng_run</span><span class="p">:</span>
+            <span class="n">self</span><span class="p">.</span><span class="nf">run</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="n">peng_jump</span><span class="p">:</span>
+            <span class="n">self</span><span class="p">.</span><span class="nf">jump</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="n">step_index</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">:</span> <span class="c1"># step_index가 10보다 커지면 다시 0으로 초기화
+</span>            <span class="n">self</span><span class="p">.</span><span class="n">step_index</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">if</span> <span class="n">userInput</span><span class="p">[</span><span class="n">pygame</span><span class="p">.</span><span class="n">K_UP</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">self</span><span class="p">.</span><span class="n">peng_jump</span><span class="p">:</span> <span class="c1"># K_UP 입력이 들어오고 점프 상태가 아닌경우 -&gt; jump() 메소드를 실행
+</span>            <span class="n">self</span><span class="p">.</span><span class="n">peng_duck</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">peng_run</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">peng_jump</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">elif</span> <span class="n">userInput</span><span class="p">[</span><span class="n">pygame</span><span class="p">.</span><span class="n">K_DOWN</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">self</span><span class="p">.</span><span class="n">peng_jump</span><span class="p">:</span> <span class="c1"># K_DOWN 입력이 들어오고 점프 상태가 아닌 경우 -&gt; duck() 메소드를 실행
+</span>            <span class="n">self</span><span class="p">.</span><span class="n">peng_duck</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">peng_run</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">peng_jump</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">peng_jump</span> <span class="ow">or</span> <span class="n">userInput</span><span class="p">[</span><span class="n">pygame</span><span class="p">.</span><span class="n">K_DOWN</span><span class="p">]):</span> <span class="c1"># 점프 상태도 아니고 K_DOWN 입력도 들어오지 않은 경우 -&gt; run() 메소드를 실행
+</span>            <span class="n">self</span><span class="p">.</span><span class="n">peng_duck</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">peng_run</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">peng_jump</span> <span class="o">=</span> <span class="bp">False</span>
+</code></pre></div></div>
+<p>상태변경의 마지막 조건 <strong>elif not (self.peng_jump or userInput[pygame.K_DOWN])</strong>에서 K_UP입력이 들어왔을 때도 이 조건에 포함이 되지 않나 생각 할 수도 있지만 기본적으로 코드의 진행은 위에서 아래로 진행되기 때문에 첫 번째 조건에 포함되어 따로 고려하지 않아도 된다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="sh">'''</span><span class="s">step_index &gt;= 10 이면 step_index = 0이므로 달리는 이미지의 인덱스가
+           0, 0, 0, 0, 0, 1, 1, 1, 1, 1로 계속 반복하게 됨.</span><span class="sh">'''</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">run_img</span><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">step_index</span> <span class="o">//</span> <span class="mi">5</span><span class="p">]</span> 
+        <span class="n">self</span><span class="p">.</span><span class="n">peng_rect</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="nf">get_rect</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">peng_rect</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">X_POS</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">peng_rect</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">Y_POS</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">step_index</span> <span class="o">+=</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">jump</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">jump_img</span>
+        <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="n">peng_jump</span><span class="p">:</span>
+            <span class="sh">'''</span><span class="s"> 점프 상태일 때 y좌표의 값을 빼므로 위로 올라가게 되고 빼는 값이 점점
+                작아지면서 아래로 내려오게 된다.</span><span class="sh">'''</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">peng_rect</span><span class="p">.</span><span class="n">y</span> <span class="o">-=</span> <span class="n">self</span><span class="p">.</span><span class="n">jump_vel</span> <span class="o">*</span> <span class="mi">4</span> 
+            <span class="n">self</span><span class="p">.</span><span class="n">jump_vel</span> <span class="o">-=</span> <span class="mf">0.8</span>
+        <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="n">jump_vel</span> <span class="o">&lt;</span> <span class="o">-</span> <span class="n">self</span><span class="p">.</span><span class="n">JUMP_VEL</span><span class="p">:</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">peng_jump</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">jump_vel</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">JUMP_VEL</span>
+</code></pre></div></div>
+<p>좌표를 빼면 왜 위로 올라가게 되는지 생각해보면 처음 설정한 X_POS와 Y_POS가 적용된 것을 보면 알 수 있다.</p>
+
+<p><img src="../../images/pygame5.png" alt="pygame5" /></p>
+
+<p>이렇게 계산되기 때문에 y좌표를 빼면 그만큼 위로 올라가게 된다.
+<br /></p>
+
+<h2 id="3-기능-추가하기">3. 기능 추가하기</h2>
+<hr />
+
+<p>점프 기능, 장애물과 닿았을 때 종료되는 기능 말고도 추가로 점수 기능이 필요했다. 우선 장애물 클래스인 Obstacle을 만든다. 모든 장애물은 이 Obstacle을 상속받는다. <strong>추가로 구현한 물고기 클래스도 장애물 취급하며 Obstacle을 상속받는다.</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Obstacle</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">image</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">rect</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="nf">get_rect</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">rect</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">SCREEN_WIDTH</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">rect</span><span class="p">.</span><span class="n">x</span> <span class="o">-=</span> <span class="n">game_speed</span> <span class="c1"># game_speed만큼씩 x좌표를 빼며 다가옴
+</span>        <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="n">rect</span><span class="p">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">self</span><span class="p">.</span><span class="n">rect</span><span class="p">.</span><span class="n">width</span><span class="p">:</span>
+            <span class="n">obstacles</span><span class="p">.</span><span class="nf">pop</span><span class="p">()</span> <span class="c1"># obstacles는 장애물 객체를 담을 리스트
+</span>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">SCREEN</span><span class="p">):</span>
+        <span class="n">SCREEN</span><span class="p">.</span><span class="nf">blit</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">image</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">rect</span><span class="p">)</span>
+    
+<span class="k">class</span> <span class="nc">Seal</span><span class="p">(</span><span class="n">Obstacle</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="c1"># x좌표는 부모 클래스를 상속받으므로 자동으로 초기화
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">rect</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">350</span>
+
+<span class="k">class</span> <span class="nc">SeaGull</span><span class="p">(</span><span class="n">Obstacle</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="c1"># x좌표는 부모 클래스를 상속받으므로 자동으로 초기화
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">rect</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">310</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">SCREEN</span><span class="p">):</span>
+        <span class="c1"># 갈매기 이미지도 스왑하며 움직이도록 하기 위해 지우지 않음 
+</span>        <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="mi">9</span><span class="p">:</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">SCREEN</span><span class="p">.</span><span class="nf">blit</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">image</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">rect</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="k">class</span> <span class="nc">Fish</span><span class="p">(</span><span class="n">Obstacle</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="n">y_pos_fish</span> <span class="o">=</span> <span class="p">[</span><span class="mi">170</span><span class="p">,</span> <span class="mi">350</span><span class="p">]</span> <span class="c1"># 2개의 값을 가지는 y좌표 리스트 
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">rect</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">(</span><span class="n">y_pos_fish</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+</code></pre></div></div>
+<p>물고기 객체는 y좌표 2개를 가지고 random.choice()로 선택된 하나의 y좌표에 의해 그려지게 된다.</p>
+
+<p><img src="../../images/pygame6.png" alt="pygame6" /> <img src="../../images/pygame7.png" alt="pygame7" /></p>
+
+<p>이제 게임에 필요한 모든 클래스를 만들었으니 main 함수에서 구현하기만 하면 된다. 점수를 스크린에 렌더링 할 수 있는 score() 함수와 배경을 그리는 background() 함수를 구현하고 while문으로 넘어가 게임 코드가 진행된다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">while</span> <span class="n">run</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="p">.</span><span class="n">event</span><span class="p">.</span><span class="nf">get</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">event</span><span class="p">.</span><span class="nb">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="p">.</span><span class="n">QUIT</span><span class="p">:</span>
+                <span class="n">run</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="n">pygame</span><span class="p">.</span><span class="nf">quit</span><span class="p">()</span>
+                <span class="n">sys</span><span class="p">.</span><span class="nf">exit</span><span class="p">()</span>
+
+        <span class="n">userInput</span> <span class="o">=</span> <span class="n">pygame</span><span class="p">.</span><span class="n">key</span><span class="p">.</span><span class="nf">get_pressed</span><span class="p">()</span>
+
+        <span class="nf">background</span><span class="p">()</span>
+        <span class="n">player</span><span class="p">.</span><span class="nf">draw</span><span class="p">(</span><span class="n">SCREEN</span><span class="p">)</span>
+        <span class="n">player</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="n">userInput</span><span class="p">)</span> <span class="c1"># 입력이 들어올 때마다 update함수 실행
+</span>
+        <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">obstacles</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># 객체 리스트가 비었다면
+</span>            <span class="c1"># 0 ~ 30 중 랜덤하게 정수 하나를 뽑아 해당 하는 객체를 리스트에 추가
+</span>            <span class="k">if</span> <span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">9</span><span class="p">:</span>
+                <span class="n">obstacles</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="nc">Seal</span><span class="p">(</span><span class="n">SEAL</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">14</span><span class="p">:</span>
+                <span class="n">obstacles</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="nc">SeaGull</span><span class="p">(</span><span class="n">SEAGULL</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">29</span><span class="p">:</span>
+                <span class="n">obstacles</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="nc">Fish</span><span class="p">(</span><span class="n">FISH</span><span class="p">))</span>
+
+
+        <span class="k">for</span> <span class="n">obstacle</span> <span class="ow">in</span> <span class="n">obstacles</span><span class="p">:</span>
+            <span class="n">obstacle</span><span class="p">.</span><span class="nf">draw</span><span class="p">(</span><span class="n">SCREEN</span><span class="p">)</span>
+            <span class="n">obstacle</span><span class="p">.</span><span class="nf">update</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">player</span><span class="p">.</span><span class="n">peng_rect</span><span class="p">.</span><span class="nf">colliderect</span><span class="p">(</span><span class="n">obstacle</span><span class="p">.</span><span class="n">rect</span><span class="p">):</span> <span class="c1"># 펭귄과 장애물이 만나는 이벤트가 발생했을 때
+</span>                <span class="nf">if</span><span class="p">(</span><span class="n">obstacle</span><span class="p">.</span><span class="n">image</span> <span class="o">==</span> <span class="n">FISH</span><span class="p">):</span> <span class="c1"># 물고기라면
+</span>                    <span class="n">obstacles</span><span class="p">.</span><span class="nf">remove</span><span class="p">(</span><span class="n">obstacle</span><span class="p">)</span> <span class="c1"># 리스트에서 제거하고
+</span>                    <span class="n">scores</span> <span class="o">+=</span> <span class="mi">1</span> <span class="c1"># 1점 추가
+</span>                    <span class="n">COIN_SOUND</span><span class="p">.</span><span class="nf">play</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span> <span class="c1"># 나머지 장애물이라면 게임 종료
+</span>                    <span class="n">pygame</span><span class="p">.</span><span class="n">mixer</span><span class="p">.</span><span class="n">music</span><span class="p">.</span><span class="nf">stop</span><span class="p">()</span>
+                    <span class="n">pygame</span><span class="p">.</span><span class="n">time</span><span class="p">.</span><span class="nf">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+                    <span class="n">death_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="nf">menu</span><span class="p">(</span><span class="n">death_count</span><span class="p">)</span>
+
+        <span class="nf">score</span><span class="p">()</span> <span class="c1"># 스코어 렌더링
+</span>
+        <span class="n">clock</span><span class="p">.</span><span class="nf">tick</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+        <span class="n">pygame</span><span class="p">.</span><span class="n">display</span><span class="p">.</span><span class="nf">update</span><span class="p">()</span>
+</code></pre></div></div>
+<p><strong>객체를 리스트에 추가할 때 조금 더 랜덤성을 부여하기 위해 1 : 1 : 1이 아닌 10 : 5 : 15로 설정</strong>했다. 물고기 또한 장애물 클래스를 상속받지만 펭귄 이미지와 만났을 때 게임이 종료되지 않고 점수가 올라야 하므로 조건을 추가했다.</p>
+
+<h2 id="4-느낀점">4. 느낀점</h2>
+<hr />
+
+<p>무엇보다 깃허브 공동작업 연습을 게임 제작으로 했던 것 때문에 더 열심히 흥미를 가지고 할 수 있었고, 혼자 하는 것 보다 팀원들과 같이 했기 때문에 잘 마무리 할 수 있었던 것 같다. 혼자가 아닌 만큼 개발의 진행 속도도 빠르지만 팀원들과의 소통이 가장 중요하다는 것을 느꼈다. 우리 팀원들 고생 하셨습니다!</p>
+
+      </div>
+      <br><br>
+      <!--Configure Disqus-->
+      <script src="https://utteranc.es/client.js"
+        repo="Daeye0l/Daeye0l.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+      </script>
+    </div>
+  </main><script async src="https://www.googletagmanager.com/gtag/js?id=G-5YYHRE7CRY"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag() { dataLayer.push(arguments); }
+	gtag('js', new Date());
+
+	gtag('config', 'G-5YYHRE7CRY');
+</script></body>
+</html>

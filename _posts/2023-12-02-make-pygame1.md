@@ -91,6 +91,7 @@ seal_char = imgSeal.get_rect()
 if peng_char.colliderect(seal_char)
 ```
 이벤트 발생시 종료되도록 했는데 완전히 닿지 않은 상태에서 게임이 계속 종료 되어서 원본 이미지를 확인해봤다.
+
 ![pygame3](../../images/pygame3.png) ![pygame4](../../images/pygame4.png)
 
 이미지 안에 있는 사물보다 이미지의 범위가 더 넓어서 발생한 문제였는데 이를 해결하기 위해 이미지를 사물의 크기에 딱 맞게 잘라냈다.

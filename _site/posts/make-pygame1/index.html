@@ -14,15 +14,15 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="pygame을 사용하여 달리기 게임 제작하기" />
 <meta property="og:description" content="pygame을 사용하여 달리기 게임 제작하기" />
-<link rel="canonical" href="http://localhost:4000/posts/make-pygame/" />
-<meta property="og:url" content="http://localhost:4000/posts/make-pygame/" />
+<link rel="canonical" href="http://localhost:4000/posts/make-pygame1/" />
+<meta property="og:url" content="http://localhost:4000/posts/make-pygame1/" />
 <meta property="og:site_name" content="Texture Theme" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2023-12-02T00:00:00+09:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Pygame으로 게임 제작하기(1)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Daeyeol Sung"},"dateModified":"2023-12-02T00:00:00+09:00","datePublished":"2023-12-02T00:00:00+09:00","description":"pygame을 사용하여 달리기 게임 제작하기","headline":"Pygame으로 게임 제작하기(1)","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/posts/make-pygame/"},"url":"http://localhost:4000/posts/make-pygame/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Daeyeol Sung"},"dateModified":"2023-12-02T00:00:00+09:00","datePublished":"2023-12-02T00:00:00+09:00","description":"pygame을 사용하여 달리기 게임 제작하기","headline":"Pygame으로 게임 제작하기(1)","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/posts/make-pygame1/"},"url":"http://localhost:4000/posts/make-pygame1/"}</script>
 <!-- End Jekyll SEO tag -->
 </head>
 <body>
@@ -145,8 +145,9 @@
 </code></pre></div></div>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">peng_char</span><span class="p">.</span><span class="nf">colliderect</span><span class="p">(</span><span class="n">seal_char</span><span class="p">)</span>
 </code></pre></div></div>
-<p>이벤트 발생시 종료되도록 했는데 완전히 닿지 않은 상태에서 게임이 계속 종료 되어서 원본 이미지를 확인해봤다.
-<img src="../../images/pygame3.png" alt="pygame3" /> <img src="../../images/pygame4.png" alt="pygame4" /></p>
+<p>이벤트 발생시 종료되도록 했는데 완전히 닿지 않은 상태에서 게임이 계속 종료 되어서 원본 이미지를 확인해봤다.</p>
+
+<p><img src="../../images/pygame3.png" alt="pygame3" /> <img src="../../images/pygame4.png" alt="pygame4" /></p>
 
 <p>이미지 안에 있는 사물보다 이미지의 범위가 더 넓어서 발생한 문제였는데 이를 해결하기 위해 이미지를 사물의 크기에 딱 맞게 잘라냈다.</p>
 
