@@ -1,4 +1,4 @@
-title: Texture Theme
+title: Daeyeol's blog
 author: Daeyeol Sung
 email: tjdeoduf1228@gmail.com
 description: > # this means to ignore newlines until "show_exerpts:"
@@ -19,15 +19,22 @@ texture:
   tagline: Backend Developer
   date_format: "%b %-d, %Y"
   style: blue
-  showNav: false
+  showNav: True
   showPicker: false
   analytics_id: 'G-5YYHRE7CRY'
+  navigation:
+    - title: Home
+      url: "/"
+    - title: Organization
+      url: "https://skhu.ac.kr"
 
   # generate social links in footer
   social_links:
     twitter: thelehhman
     github:  Daeye0l
     linkedIn: in/thelehhman
+    instagram: daeye0l
+    mail: tjdeoduf1228
     rss: rss
 
 # If you want to link only specific pages in your header, uncomment

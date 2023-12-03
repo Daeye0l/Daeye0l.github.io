@@ -56,6 +56,12 @@
 .icon-linkedin-squared:before {
   content: "\f30c";
 } /* '' */
+.icon-instagram:before {
+  content: "\f16d";
+} /* '' */
+.icon-mail:before {
+  content: "\e800";
+} /* '' */
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
