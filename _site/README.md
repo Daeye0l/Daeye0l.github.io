@@ -1,150 +1,133 @@
-# texture
+# Rain
 
-A configurable jekyll theme for simply beautiful blogs.
+Rain is a simple and clean Jekyll theme with focus on content. It's a fork of [Tale theme](https://github.com/chesterhow/tale) with additional customizations.
 
-**Demo**: [samarsault.com/texture](https://samarsault.com/texture)
+![](https://github.com/inelaah/rain/blob/master/images/screenshot.png)
 
-![texture theme preview](/screen1.png)
+## Features
+- Compatible with GitHub Pages
+- Responsive design
+- Syntax highlighting
+- Markdown and HTML text formatting
+- Pagination of posts
+- Related articles section
+- Links to social media
 
 
-## Installation on Github Pages
+## Getting Started
 
-Add this line to your site's `_config.yml`:
-```yaml
-remote_theme: samarsault/texture
+You will need to install Jekyll on your machine. Installation depends on your operating system and it is explained [here](https://jekyllrb.com/docs/installation/).
+
+Then create a new directory and clone this repository:
+
+```bash
+mkdir rain
+cd rain
+git clone https://github.com/inelaah/rain.git
 ```
 
-**NOTE: If you are forking this repo, remove `base_url: /texture` in the `_config.yml` which is required to load the required website assets**
-## Installation
+Install all dependencies:
 
-Add this line to your Jekyll site's `Gemfile`:
-
-```ruby
-gem "texture"
+```bash
+bundle install
 ```
 
-And add this line to your Jekyll site's `_config.yml`:
+## Site Configuration
 
-```yaml
-theme: texture
+There is a configuration file `_config.yml` in root directory. You should overwrite it to fit to your needs.
+
+An example of `_config.yml` looks like this:
+
+```bash
+# Site settings
+title:          Rain
+description:    "Rain is a simple and clean Jekyll theme with focus on content."
+url:            https://github.com/inelaah/rain
+
+# Author
+author:
+  name:         Inela Avdic Hukic
+  email:        inelaah@gmail.com
+  url:          https://inelaah.com
+
+# Build settings
+markdown:       kramdown
+
+# Assets
+sass:
+  sass_dir:     _sass
+  style:        compressed
+
+# Gems
+plugins:
+  - jekyll-feed
+  - jekyll-paginate
+  # - jemoji #Uncomment this to allow emoji in your post
+
+# Permalinks
+permalink:      /:year-:month-:day/:title
+paginate:       5
+
+# Related posts settings
+related_posts_section:
+  max_count:        5
+  min_common_tags:  2
+
+# Links to social media
+social:
+  email: inelaah@gmail.com
+  github: https://github.com/inelaah
+  twitter: https://twitter.com
+  linkedin: https://ba.linkedin.com/in/inela-avdic-hukic-322354131
 ```
 
-And then execute:
+## Favicons
 
-    $ bundle
+It is recommended to put your own favicons:
 
-Or install it yourself as:
+- `apple-touch-icon.png` (180x180)
+- `favicon-32x32.png` (32x32)
+- `favicon-16x16.png` (16x16)
+- `mstile-150x150.png` (150x150)
+- `android-chrome-192x192.png` (192x192)
+- `android-chrome-512x512.png` (512x512)
 
-    $ gem install texture
+in `/assets` directory. They're easily created via [Favicon Generator](https://realfavicongenerator.net/).
 
-## Usage
 
-The "texture" key in _config.yml is used to customize the theme data.
-```yaml
-texture:
-  title: Adam Denisov
-  tagline: Developer. Designer
-  date_format: "%b %-d, %Y"
+## Related Articles
 
-  social_links:
-    twitter: thelehhman
-    github:  thelehhman
-    linkedIn: in/thelehhman # format: locale/username
+Related articles section is based on article tags. For every post that you want to have this section you should define tags.
+To include related articles in the bottom of the content you should define `related_posts_section` property in configuration file.
+It contains two fields: `max_count` and `min_common_tags`:
+- `max_count` represents the maximum number of related articles shown on a single article.
+- `min_common_tags` represents the minimum number of common tags for two articles to become related articles.
+
+## Links to social media
+
+To include links to social media in the top right corner of your page you need to define `social` property.
+It contains email, GitHub, Twitter and LinkedIn fields. You can leave out any of these if you don't want them to show up on your page.
+
+## Customizing Rain theme
+
+If you want to customize Rain theme you can fork this project and make some changes. If you just want to change the style then you can find Sass files in `_sass/rain` directory.
+
+## Adding your own posts
+
+You can see an example of post structure in `_posts` directory. After you clone this project you should clean the `_posts` directory and add your own posts.
+
+## Build and serve
+
+```
+bundle exec jekyll serve
 ```
 
-**Styling**
-
-Multiple header styles are supported using the "style" property under texture in `_config.yml`.
-
-```yaml
-texture:
-  style: [yellow|red|black|blue|green|purple]
-```
-
-For example, the blue style looks like this:
-
-![texture theme blue](/screen2.png)
-
-
-**Texture Picker**
-
-You can toggle the texture picker to show/experiment various textures on your site using the showPicker variable. Remember to make it `false` for production.
-
-```yaml
-texture:
-  showPicker: [false|true] # show the texture selector(development purposes)
-```
-
-**Comments (Disqus)**
-
-Comments on posts can be enabled by specifying your disqus_shortname under texture in `_config.yml`. For example,
-```yaml
-texture:
-  disqus_shortname: games
-```
-
-**Google Analytics**
-
-It can be enabled by specifying your analytics id under texture in `_config.yml`
-```yaml
-texture:
-  analytics_id: '< YOUR ID >'
-```
-
-**Excerpts**
-
-Excerpts can be enabled by adding the following line to your `_config.yml`
-```yaml
-show_excerpts: true
-```
-
-**Toggle Navbar**
-
-```yaml
-texture:
-  showNav: true
-```
-
-**Navigation**
-
-After setting `showNav` to true navigation can be built by adding the following to your `_config.yml`
-
-```yaml
-texture:
-  navigation:
-    - title: My Work
-      url: "/my-work"
-    - title: Resume
-      url: "/resume"
-```
-
-**Layouts**
-
-- Home
-- Page
-- Post
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/samarsault/texture. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
-
-## Development
-
-To set up your environment to develop this theme, run `bundle install`.
-
-Your theme is setup just like a normal Jekyll site! To test your theme, run `bundle exec jekyll serve` and open your browser at `http://localhost:4000`. This starts a Jekyll server using your theme. Add pages, documents, data, etc. like normal to test your theme's contents. As you make modifications to your theme and to your content, your site will regenerate and you should see the changes in the browser after a refresh, just like normal.
-
-When your theme is released, only the files in `_layouts`, `_includes`, `_sass` and `assets` tracked with Git will be bundled.
-To add a custom directory to your theme-gem, please edit the regexp in `texture.gemspec` accordingly.
-
-## Donation
-If this project help you reduce time to develop, you can give me a cup of coffee :) 
-
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/thelehhman)
+Head over to http://127.0.0.1:4000/ to see your page.
 
 ## License
 
-The theme is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+Rain is licensed under the MIT license. Check the [LICENSE](LICENSE.md) file for details.
 
-## More Themes
-[plainwhite](https://github.com/samarsault/plainwhite-jekyll)
+## Author
+
+[Inela Avdic Hukic](https://github.com/inelaah)

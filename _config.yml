@@ -1,50 +1,38 @@
-title: Daeyeol's blog
-author: Daeyeol Sung
-email: tjdeoduf1228@gmail.com
-description: > # this means to ignore newlines until "show_exerpts:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
-show_excerpts: true # set to true to show excerpts on the homepage
-baseurl: ""
+# Site settings
+title:          Dayeol's Dev Log
+description:    "프로그래밍과 공부 내용 기록 노트"
+url:            https://github.com/Daeye0l.github.io
 
-# Minima date format
-# refer to http://shopify.github.io/liquid/filters/date/ if you want to customize this
-sass:
-  sass_dir: _sass
-
-permalink: /posts/:title/
-texture:
-  title: DaeYeol Sung
-  tagline: Backend Developer
-  date_format: "%b %-d, %Y"
-  style: blue
-  showNav: True
-  showPicker: false
-  analytics_id: 'G-5YYHRE7CRY'
-  navigation:
-    - title: Home
-      url: "https://daeye0l.github.io"
-    - title: Organization
-      url: "https://skhu.ac.kr"
-
-  # generate social links in footer
-  social_links:
-    twitter: thelehhman
-    github:  Daeye0l
-    linkedIn: in/thelehhman
-    instagram: daeye0l
-    mail: tjdeoduf1228
-    rss: rss
-
-# If you want to link only specific pages in your header, uncomment
-# this and add the path to the pages in order as they should show up
-#header_pages:
-# - about.md
+# Author
+author:
+  name:         Daeyeol Sung
+  email:        tjdeoduf1228@gmail.com
 
 # Build settings
-# theme: texture
+markdown:       kramdown
 
+# Assets
+sass:
+  sass_dir:     _sass
+  style:        compressed
+
+# Gems
 plugins:
-  - jekyll-seo-tag
-#  - jekyll-feed
+  - jekyll-feed
+  - jekyll-paginate
+  # - jemoji #Uncomment this to allow emoji in your post
+
+# Permalinks
+permalink:      /:year-:month-:day/:title
+paginate:       5
+
+# Related posts settings
+related_posts_section:
+  max_count:        5
+  min_common_tags:  2
+
+# Links to social media
+social:
+  email: tjdeoduf1228@gmail.com
+  github: https://github.com/Daeye0l
+  instagram: https://instagram.com/daeye0l
