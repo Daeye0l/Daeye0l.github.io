@@ -1,0 +1,32 @@
+#search-container {
+    padding-top: 10px;
+    text-align: right;
+}
+
+#search-input {
+    padding: 3px 5px;
+    width: 250px;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+#search-input:focus {
+    outline: none;
+}
+
+#results-container {
+    margin: 10px;
+    text-align: right;
+    list-style-position: inside;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+#results-container li {
+    padding: 2px;
+}
+
+#results-container li a:hover {
+    text-decoration: underline;
+}

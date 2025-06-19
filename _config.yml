@@ -36,3 +36,7 @@ social:
   email: tjdeoduf1228@gmail.com
   github: https://github.com/Daeye0l
   instagram: https://instagram.com/daeye0l
+
+# 검색기능 설정
+include:
+  - search.json
