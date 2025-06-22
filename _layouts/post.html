@@ -8,6 +8,9 @@ layout: default
     {% if page.date %}
       <time datetime="{{ page.date }}">{{ page.date | date: "%B %d, %Y" }}</time>
     {% endif %}
+    {% if page.author %}
+      <div>Written by {{ page.author }}</div>
+    {% endif %}
   </div>
   <h1 class="post-title">
     <div>{{ page.title }}</div>
